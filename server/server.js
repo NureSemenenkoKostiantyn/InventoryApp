@@ -44,7 +44,7 @@ app.use(
   })
 );
 
-app.use("/products", productsRouter);
+app.use("/api/products", productsRouter);
 /* Error handler middleware */
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
