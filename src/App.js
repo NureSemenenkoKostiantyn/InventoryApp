@@ -1,55 +1,48 @@
-import './App.css';
+import { useState, useEffect } from 'react';
 
 import { Tabel } from './components/Table/Table';
 
-const data = {
-  rows: [
-    { id: 1, 
-      nameColumn: 'Helllllllllllllllllllllllllllllllllllo', 
-      partNumberColumn: 'World', 
-      labelColumn: 'Hellllo', 
-      startInvColumn: 'World', 
-      invReceivedColumn: 'Hellllo', 
-      invShippedColumn: 'World', 
-      invOnHandColumn: 'Hellllo', 
-      minRequiredColumn: 'World' },
-    { id: 2, 
-      nameColumn: 'Hellllo', 
-      partNumberColumn: 'World', 
-      labelColumn: 'Hellllo', 
-      startInvColumn: 'World', 
-      invReceivedColumn: 'Hellllo', 
-      invShippedColumn: 'World', 
-      invOnHandColumn: 'Hellllo', 
-      minRequiredColumn: 'World' },
-    { id: 3, 
-      nameColumn: 'Hellllo', 
-      partNumberColumn: 'World', 
-      labelColumn: 'Hellllo', 
-      startInvColumn: 'World', 
-      invReceivedColumn: 'Hellllo', 
-      invShippedColumn: 'World', 
-      invOnHandColumn: 'Hellllo', 
-      minRequiredColumn: 'World' }
-  ]
-}
+ 
 
 const columns = [
-  { field: 'nameColumn', headerName: 'Name', width: 200 },
-  { field: 'partNumberColumn', headerName: 'PartNumber', width: 150 },
-  { field: 'labelColumn', headerName: 'Label', width: 150 },
-  { field: 'startInvColumn', headerName: 'Starting Inventory', width: 150 },
-  { field: 'invReceivedColumn', headerName: 'Inventory Received', width: 150 },
-  { field: 'invShippedColumn', headerName: 'Inventory Shipped', width: 150 },
-  { field: 'invOnHandColumn', headerName: 'Inventory On hand', width: 150 },
-  { field: 'minRequiredColumn', headerName: 'Minimum Required', width: 150 },
-  { field: 'minRequiredColumn', headerName: 'Minimum Required', width: 150 },
+  { field: 'id', headerName: 'ID', width: 20 },
+  { field: 'ProductName', headerName: 'Name', width: 200 },
+  { field: 'PartNumber', headerName: 'PartNumber', width: 150 },
+  { field: 'ProductLabel', headerName: 'Label', width: 150 },
+  { field: 'StartingInventory', headerName: 'Starting Inventory', width: 150 },
+  { field: 'InventoryReceived', headerName: 'Inventory Received', width: 150 },
+  { field: 'InventoryShipped', headerName: 'Inventory Shipped', width: 150 },
+  { field: 'InventoryOnHand', headerName: 'Inventory On hand', width: 150 },
+  { field: 'MinimumRequired', headerName: 'Minimum Required', width: 150 },
   {field: 'toShipColumn', headerName: 'To Ship', width: 150, editable: true}
 ]
 
 function App() {
+
+  const [data, setData] = useState({rows:[]});
+  useEffect(() => 
+    {
+      callBackendAPI()
+      .then(res => setData({rows: res.data}))
+      .catch(err => console.log(err));
+    }, []
+  )
+
+  const callBackendAPI = async () => {
+    const response = await fetch('/products');
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(body.message) 
+    }
+    return body;
+  };
+
   return (
-    <Tabel data = {data} columns = {columns}>Products</Tabel>
+    <>
+      <Tabel data = {data} columns = {columns}>Products</Tabel>
+    </>
+
   );
 }
 
