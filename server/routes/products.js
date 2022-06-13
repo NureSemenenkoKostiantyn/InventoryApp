@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const products = require('../services/products');
 
-/* GET programming languages. */
 router.get('/', async function(req, res, next) {
   try {
     res.json(await products.get());
@@ -14,30 +13,26 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
     try {
-      res.json(await products.create(req.body));
+        res.json(await products.create(req.body));
     } catch (err) {
       console.error(`Error while creating product`, err.message);
       next(err);
     }
 });
 
-router.put('/:id', async function(req, res, next) {
+router.put('/', async function(req, res, next) {
     try {
-      res.json(await products.update(req.params.id, req.body));
+      let response = {}
+      req.body.products.forEach(async (row) => {
+        response = await products.update(row.id, row)
+      })
+      res.json( response)
     } catch (err) {
       console.error(`Error while updating product`, err.message);
       next(err);
     }
 });
 
-// router.delete('/:id', async function(req, res, next) {
-//     try {
-//       res.json(await products.remove(req.params.id));
-//     } catch (err) {
-//       console.error(`Error while deleting product`, err.message);
-//       next(err);
-//     }
-// });
 
 router.delete('/', async function(req, res, next) {
     try {

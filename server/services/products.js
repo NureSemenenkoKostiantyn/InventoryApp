@@ -19,7 +19,7 @@ async function create(product){
       `INSERT INTO products 
       (ProductName, PartNumber, ProductLabel, StartingInventory, InventoryReceived, InventoryShipped, InventoryOnHand, MinimumRequired) 
       VALUES 
-      (${product.ProductName}, ${product.PartNumber}, ${product.ProductLabel}, ${product.StartingInventory}, ${product.InventoryReceived}, 
+      ('${product.ProductName}', '${product.PartNumber}', '${product.ProductLabel}', ${product.StartingInventory}, ${product.InventoryReceived}, 
         ${product.InventoryShipped}, ${product.InventoryOnHand}, ${product.MinimumRequired})`
     );
   
@@ -37,20 +37,20 @@ async function create(product){
     const result = await db.query(
       `UPDATE products 
       SET ProductName="${product.ProductName}", 
-      PartNumber=${product.PartNumber}, 
+      PartNumber='${product.PartNumber}', 
       ProductLabel="${product.ProductLabel}", 
       StartingInventory=${product.StartingInventory}, 
-      InventoryReceived="${product.InventoryReceived}", 
+      InventoryReceived=${product.InventoryReceived}, 
       InventoryShipped=${product.InventoryShipped}, 
-      InventoryOnHand="${product.InventoryOnHand}", 
+      InventoryOnHand=${product.InventoryOnHand}, 
       MinimumRequired=${product.MinimumRequired} 
       WHERE id=${id}` 
     );
   
-    let message = 'Error in updating programming language';
+    let message = 'Error in updating product';
   
     if (result.affectedRows) {
-      message = 'Programming language updated successfully';
+      message = 'Product updated successfully';
     }
   
     return {message};

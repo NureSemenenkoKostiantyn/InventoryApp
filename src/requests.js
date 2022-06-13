@@ -11,15 +11,6 @@ const getProducts = async () => {
     }
 };
 
-const removeProduct = async (id) => {
-    try {
-        const response = await axios.delete(`/api/products:${id}`)
-        return
-    } catch (error) {
-        console.error(error)
-    }
-    
-}
 
 const removeProducts = async (id) => {
     try {
@@ -54,11 +45,25 @@ const postProduct = async (product) => {
     }
 }
 
+const updateProducts = async (products) => {
+    try {
+        await axios.put('/api/products', {products: products})
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    } catch(error){
+        console.error(error)
+    }
+}
+
 
 
 export {
     getProducts,
-    removeProduct,
     postProduct,
-    removeProducts
+    removeProducts,
+    updateProducts
 }
