@@ -1,6 +1,4 @@
 const db = require('./db');
-const helper = require('../helper');
-const config = require('../config');
 const { getWithId } = require('./products');
 
 async function updateIn(id, number){

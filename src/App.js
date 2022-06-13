@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import { getProducts } from './requests';
 import { Table } from './components/Export';
 

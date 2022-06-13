@@ -1,6 +1,6 @@
-import { TextField, Button } from "@mui/material"
-import FormControl, { useFormControl } from '@mui/material/FormControl';
-import { useRef, useState } from "react";
+import { Button } from "@mui/material"
+import FormControl from '@mui/material/FormControl';
+import { useState } from "react";
 import { Input } from "../Export";
 import {postProduct} from "../../requests"
 

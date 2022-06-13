@@ -1,6 +1,6 @@
 import styles from "./Table.module.css";
 import { DataGrid} from '@mui/x-data-grid';
-import {Button, TextField} from '@mui/material';
+import {Button} from '@mui/material';
 import {EditWindow} from "../Export";
 import { removeProducts, receiveProducts, shipProducts } from "../../requests";
 import { useState } from "react";
