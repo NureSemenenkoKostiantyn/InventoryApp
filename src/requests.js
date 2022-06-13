@@ -59,11 +59,41 @@ const updateProducts = async (products) => {
     }
 }
 
+const receiveProducts = async (products) => {
+    try {
+        await axios.put('/api/shipping/in', {data: products})
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    } catch(error){
+        console.error(error)
+    }
+}
+
+const shipProducts = async (products) => {
+    try {
+        await axios.put('/api/shipping/out', {data: products})
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    } catch(error){
+        console.error(error)
+    }
+}
+
 
 
 export {
     getProducts,
     postProduct,
     removeProducts,
-    updateProducts
+    updateProducts,
+    receiveProducts, 
+    shipProducts
 }

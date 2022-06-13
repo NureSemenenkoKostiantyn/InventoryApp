@@ -5,7 +5,14 @@ const shipping = require('../services/shipping')
 
 router.put('/out', async function(req, res, next) {
     try {
-        await shipping.updateOut(req.body.product, req.body.shippedNumber)
+        let response = {}
+        console.log(req.body)
+        req.body.data.forEach(async product => {
+            response = await shipping.updateOut(product.id, product.number)
+        });
+        console.log("ship", response)
+        res.json(response)
+        
 
     } catch (err) {
       console.error(`Error while updating product`, err.message);
@@ -15,7 +22,13 @@ router.put('/out', async function(req, res, next) {
 
 router.put('/in', async function(req, res, next) {
     try {
-        await shipping.updateIn(req.body.product, req.body.shippedNumber)
+        let response = {}
+        req.body.data.forEach(async product => {
+            response = await shipping.updateIn(product.id, product.number)
+        });
+        console.log("receive", response)
+        res.json(response)
+
 
     } catch (err) {
       console.error(`Error while updating product`, err.message);

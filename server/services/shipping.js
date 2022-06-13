@@ -1,15 +1,23 @@
 const db = require('./db');
 const helper = require('../helper');
 const config = require('../config');
+const { getWithId } = require('./products');
 
-async function updateIn(product, number){
+async function updateIn(id, number){
+    let product = await getWithId(id)
+    console.log(product)
+    console.log("number", number)
+
     const result = await db.query(
         `UPDATE products 
         SET 
-        InventoryShipped=${product.InventoryShipped - number}, 
-        InventoryOnHand=${product.InventoryOnHand + number}
-        WHERE id=${product.id}`  
+        InventoryReceived=${Number(product.data[0].InventoryReceived) + Number(number)}, 
+        InventoryOnHand=${product.data[0].InventoryOnHand + Number(number)}
+        WHERE id=${id}`  
     );
+ 
+
+  
   
     let message = 'Error in updating product';
   
@@ -20,14 +28,16 @@ async function updateIn(product, number){
     return {message};
 }
 
-async function updateOut(product, number){
+async function updateOut(id, number){
+    let product = await getWithId(id)
     const result = await db.query(
       `UPDATE products 
       SET 
-      InventoryShipped=${product.InventoryShipped + number}, 
-      InventoryOnHand=${product.InventoryOnHand - number}
-      WHERE id=${product.id}` 
+      InventoryShipped=${product.data[0].InventoryShipped + Number(number)}, 
+      InventoryOnHand=${product.data[0].InventoryOnHand - Number(number)}
+      WHERE id=${id}` 
     );
+    
   
     let message = 'Error in updating product';
   

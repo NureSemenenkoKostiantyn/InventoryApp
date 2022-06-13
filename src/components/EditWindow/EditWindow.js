@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {updateProducts} from '../../requests.js'
+import {getEditedCell, getField} from '../../EditingModelMethods.js'
 
 function EditWindow(props) {
 
@@ -37,28 +38,16 @@ const setEditable = () => {
     setOpen(false);
   };
 
-  const ff = (model) => {
-    const f = (model) => {
-      return Object.keys(model)[0]
-  }
-  
-  let id = f(model);
-  
-  let cell = f(model[id])
-  
-  let value = model[id][cell].value
-  return value
-  }
+
   const handleChangeModel = (model) => {
     props.rows.map(
       (row) => {
-        if(row.id == Object.keys(model)[0]){
-          row[Object.keys(model[Object.keys(model)[0]])[0]] = ff(model)
+        if(row.id == getField(model)){
+          row[getField(model[getField(model)])] = getEditedCell(model)
         } 
         return row
       }
     ); 
-    console.log(props.rows); 
   }
 
   return (
