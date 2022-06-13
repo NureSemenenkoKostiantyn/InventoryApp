@@ -15,7 +15,7 @@ const columns = [
   { field: 'InventoryShipped', headerName: 'Inventory Shipped', width: 120, editable: false },
   { field: 'InventoryOnHand', headerName: 'Inventory On hand', width: 120, editable: false },
   { field: 'MinimumRequired', headerName: 'Minimum Required', width: 120, editable: false },
-  {field: 'toShipColumn', headerName: 'To Ship', width: 120, editable: true}
+  {field: 'toShipColumn', headerName: 'To Ship/Receive', width: 120, editable: true}
 ]
 
 function App() {
@@ -30,8 +30,6 @@ function App() {
       .catch(err => console.log(err));
     }, [refresh]
   )
-
-
 
   return (
     <>

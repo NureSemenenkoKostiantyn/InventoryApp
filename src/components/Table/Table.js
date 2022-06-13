@@ -6,10 +6,24 @@ import { removeProducts, receiveProducts, shipProducts } from "../../requests";
 import { useState } from "react";
 import { Form } from "../Export";
 import { getField, getEditedCell } from "../../EditingModelMethods";
+import {GridToolbarContainer} from '@mui/x-data-grid';
+
+
 
 
 export let Table = (props) => {
     
+    function CustomToolbar(props) {
+        return (
+          <GridToolbarContainer>
+                    <Button style={{margin: '5px'}} variant="outlined" onClick={() => {removeProducts(SelectedRows.map((obj) => obj.id));props.Refresh()}}>Remove a row</Button>
+                    <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await receiveProducts(ShippedProducts); ;props.Refresh();SetShippedProducts([])}}>Receive</Button>
+                    <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await shipProducts(ShippedProducts) ;props.Refresh();SetShippedProducts([])}}>Ship</Button>
+          </GridToolbarContainer>
+        );
+      }
+
+      
     const [SelectedRows, SetSelectedRows] = useState([]);
     const [ShippedProducts, SetShippedProducts] = useState([])
 
@@ -20,7 +34,6 @@ export let Table = (props) => {
         if(number == undefined){return}
         let i = 0
         ShippedProducts.forEach(product => {
-            
             if(id == product.id){
                 let temp = ShippedProducts
                 temp[i] = {id: id, number: number}
@@ -28,7 +41,6 @@ export let Table = (props) => {
                 return
             }
             i += 1
-
         });
         let temp = ShippedProducts
         temp.push({id: id, number: number})
@@ -38,7 +50,6 @@ export let Table = (props) => {
 
     return(
         <>
-            
             <h2 className={styles.h2} >{props.children}</h2>
             <div style={{height:600, width: '100%'  }}>
                 <DataGrid rows={props.data.rows} columns={props.columns} checkboxSelection rowsPerPageOptions={[5, 10, 20]} onEditRowsModelChange={(model) => {handleChangeModel(model)}}
@@ -49,21 +60,13 @@ export let Table = (props) => {
                         )
                         SetSelectedRows(selectedRowData);
                       }}
+                      components={{
+                        Toolbar: CustomToolbar
+                      }}
                 />
             </div>
-            <div>
-                <EditWindow rows = {SelectedRows} columns = {props.columns} Refresh = {props.Refresh} ></EditWindow>
-                <Button style={{margin: '5px'}} variant="outlined" onClick={() => {removeProducts(SelectedRows.map((obj) => obj.id));props.Refresh()}}>Remove a row</Button>
-                <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await receiveProducts(ShippedProducts); ;props.Refresh();SetShippedProducts([])}}>Receive</Button>
-                <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await shipProducts(ShippedProducts) ;props.Refresh();SetShippedProducts([])}}>Ship</Button>
-            </div>
+            <EditWindow rows = {SelectedRows} columns = {props.columns} Refresh = {props.Refresh} ></EditWindow>
             <Form Refresh = {props.Refresh}></Form>
-                
-
-            
-            
-            
-            
         </>
 
     )
