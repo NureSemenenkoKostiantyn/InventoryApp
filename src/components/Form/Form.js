@@ -31,9 +31,9 @@ const Form = (props) => {
         setProduct(temp)
     }
 
-    const sendValue = () => {
+    const sendValue = async () => {
         if(validation()){
-            postProduct(product)
+            await postProduct(product)
             props.Refresh()
             return
         }

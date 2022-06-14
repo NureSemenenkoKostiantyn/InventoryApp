@@ -16,7 +16,7 @@ export let Table = (props) => {
     function CustomToolbar(props) {
         return (
           <GridToolbarContainer>
-                    <Button style={{margin: '5px'}} variant="outlined" onClick={() => {removeProducts(SelectedRows.map((obj) => obj.id));props.Refresh()}}>Remove a row</Button>
+                    <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await removeProducts(SelectedRows.map((obj) => obj.id));props.Refresh()}}>Remove a row</Button>
                     <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await receiveProducts(ShippedProducts); ;props.Refresh();SetShippedProducts([])}}>Receive</Button>
                     <Button style={{margin: '5px'}} variant="outlined" onClick={async () => {await shipProducts(ShippedProducts) ;props.Refresh();SetShippedProducts([])}}>Ship</Button>
           </GridToolbarContainer>

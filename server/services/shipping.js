@@ -3,8 +3,6 @@ const { getWithId } = require('./products');
 
 async function updateIn(id, number){
     let product = await getWithId(id)
-    console.log(product)
-    console.log("number", number)
 
     const result = await db.query(
         `UPDATE products 
@@ -35,8 +33,6 @@ async function updateOut(id, number){
       InventoryOnHand=${product.data[0].InventoryOnHand - Number(number)}
       WHERE id=${id}` 
     );
-    
-  
     let message = 'Error in updating product';
   
     if (result.affectedRows) {

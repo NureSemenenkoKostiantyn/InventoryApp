@@ -67,7 +67,7 @@ const setEditable = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => {updateProducts(props.rows); props.Refresh() ;handleClose()}}>Edit</Button>
+          <Button onClick={async () => {await updateProducts(props.rows); props.Refresh() ;handleClose()}}>Edit</Button>
         </DialogActions>
       </Dialog>
     </div>
